@@ -13,7 +13,24 @@ if ( ! function_exists( 'current_user_can' ) ) {
 function hugeit_slider_show_slider() {
 	global $wpdb;
 
-	session_start();
+	/**
+	 * Start sessions if not exists
+	 *
+	 * @author     Ivijan-Stefan Stipic <creativform@gmail.com>
+	 */
+	if (strnatcmp(phpversion(),'5.4.0') >= 0)
+	{
+		if (session_status() == PHP_SESSION_NONE) {
+			session_start();
+		}
+	}
+	else
+	{
+		if(session_id() == '') {
+			session_start();
+		}
+	}
+	
 	if ( isset( $_REQUEST['csrf_token_hugeit_1752'] ) ) {
 		$_REQUEST['csrf_token_hugeit_1752'] = esc_html( $_REQUEST['csrf_token_hugeit_1752'] );
 		if ( $_SESSION['csrf_token_hugeit_1752'] == $_REQUEST['csrf_token_hugeit_1752'] ) {
